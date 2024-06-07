@@ -10,6 +10,6 @@ namespace Models
     {
         public int Id { get; set; }
         public int Numero { get; set; }
-        public DateOnly DataVencimento { get; set; }
+        public DateTime DataVencimento { get; set; }
     }
 }

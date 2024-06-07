@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjAPICarro.Data;
 
@@ -11,9 +12,10 @@ using ProjAPICarro.Data;
 namespace ProjAPICarro.Migrations
 {
     [DbContext(typeof(ProjAPICarroContext))]
-    partial class ProjAPICarroContextModelSnapshot : ModelSnapshot
+    [Migration("20240607135959_4Created")]
+    partial class _4Created
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,29 +87,6 @@ namespace ProjAPICarro.Migrations
                     b.ToTable("Carro");
                 });
 
-            modelBuilder.Entity("Models.CarroServico", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarroPlaca")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ServicoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarroPlaca");
-
-                    b.HasIndex("ServicoId");
-
-                    b.ToTable("CarroServico");
-                });
-
             modelBuilder.Entity("Models.Cartao", b =>
                 {
                     b.Property<string>("NumeroCartao")
@@ -128,30 +107,6 @@ namespace ProjAPICarro.Migrations
                     b.HasKey("NumeroCartao");
 
                     b.ToTable("Cartao");
-                });
-
-            modelBuilder.Entity("Models.Compra", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarroPlaca")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DataCompra")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Preco")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarroPlaca");
-
-                    b.ToTable("Compra");
                 });
 
             modelBuilder.Entity("Models.Endereco", b =>
@@ -210,6 +165,7 @@ namespace ProjAPICarro.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CartaoNumeroCartao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DataPagamento")
@@ -287,23 +243,6 @@ namespace ProjAPICarro.Migrations
                     b.ToTable("Pix");
                 });
 
-            modelBuilder.Entity("Models.Servico", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Servico");
-                });
-
             modelBuilder.Entity("Models.TipoPix", b =>
                 {
                     b.Property<int>("Id")
@@ -319,45 +258,6 @@ namespace ProjAPICarro.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoPix");
-                });
-
-            modelBuilder.Entity("Models.Venda", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarroPlaca")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ClienteDocumento")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DataVenda")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FuncionarioDocumento")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("PagamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("ValorVenda")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarroPlaca");
-
-                    b.HasIndex("ClienteDocumento");
-
-                    b.HasIndex("FuncionarioDocumento");
-
-                    b.HasIndex("PagamentoId");
-
-                    b.ToTable("Venda");
                 });
 
             modelBuilder.Entity("Models.Cliente", b =>
@@ -388,32 +288,6 @@ namespace ProjAPICarro.Migrations
                     b.HasDiscriminator().HasValue("Funcionario");
                 });
 
-            modelBuilder.Entity("Models.CarroServico", b =>
-                {
-                    b.HasOne("Models.Carro", "Carro")
-                        .WithMany()
-                        .HasForeignKey("CarroPlaca");
-
-                    b.HasOne("Models.Servico", "Servico")
-                        .WithMany()
-                        .HasForeignKey("ServicoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Carro");
-
-                    b.Navigation("Servico");
-                });
-
-            modelBuilder.Entity("Models.Compra", b =>
-                {
-                    b.HasOne("Models.Carro", "Carro")
-                        .WithMany()
-                        .HasForeignKey("CarroPlaca");
-
-                    b.Navigation("Carro");
-                });
-
             modelBuilder.Entity("Models.Pagamento", b =>
                 {
                     b.HasOne("Models.Boleto", "Boleto")
@@ -424,7 +298,9 @@ namespace ProjAPICarro.Migrations
 
                     b.HasOne("Models.Cartao", "Cartao")
                         .WithMany()
-                        .HasForeignKey("CartaoNumeroCartao");
+                        .HasForeignKey("CartaoNumeroCartao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Models.Pix", "Pix")
                         .WithMany()
@@ -459,35 +335,6 @@ namespace ProjAPICarro.Migrations
                         .IsRequired();
 
                     b.Navigation("Tipo");
-                });
-
-            modelBuilder.Entity("Models.Venda", b =>
-                {
-                    b.HasOne("Models.Carro", "Carro")
-                        .WithMany()
-                        .HasForeignKey("CarroPlaca");
-
-                    b.HasOne("Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteDocumento");
-
-                    b.HasOne("Models.Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioDocumento");
-
-                    b.HasOne("Models.Pagamento", "Pagamento")
-                        .WithMany()
-                        .HasForeignKey("PagamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Carro");
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Funcionario");
-
-                    b.Navigation("Pagamento");
                 });
 
             modelBuilder.Entity("Models.Funcionario", b =>
