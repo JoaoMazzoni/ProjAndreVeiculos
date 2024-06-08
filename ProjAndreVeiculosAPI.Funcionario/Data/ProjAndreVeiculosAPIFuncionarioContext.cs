@@ -19,7 +19,9 @@ namespace ProjAndreVeiculosAPIFuncionario.Data
 
             // Configura a chave primária na entidade raiz Pessoa
             modelBuilder.Entity<Pessoa>().HasKey(p => p.Documento);
+            modelBuilder.Entity<Models.Funcionario>().ToTable("Funcionario");
         }
         public DbSet<Models.Funcionario> Funcionario { get; set; } = default!;
+        public DbSet<Models.Pessoa>? Pessoas { get; set; } = default!;
     }
 }

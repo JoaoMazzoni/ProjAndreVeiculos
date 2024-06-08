@@ -3,12 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ProjAPICarro.Migrations
+namespace ProjAndreVeiculosAPIFuncionario.Migrations
 {
-    public partial class _2Created : Migration
+    public partial class InitialCreated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Cargo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cargo", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Endereco",
                 columns: table => new
@@ -38,9 +51,7 @@ namespace ProjAPICarro.Migrations
                     DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EnderecoId = table.Column<int>(type: "int", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Renda = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,6 +64,36 @@ namespace ProjAPICarro.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Funcionario",
+                columns: table => new
+                {
+                    Documento = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CargoId = table.Column<int>(type: "int", nullable: false),
+                    ValorComissao = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Comissao = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funcionario", x => x.Documento);
+                    table.ForeignKey(
+                        name: "FK_Funcionario_Cargo_CargoId",
+                        column: x => x.CargoId,
+                        principalTable: "Cargo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Funcionario_Pessoas_Documento",
+                        column: x => x.Documento,
+                        principalTable: "Pessoas",
+                        principalColumn: "Documento");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Funcionario_CargoId",
+                table: "Funcionario",
+                column: "CargoId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Pessoas_EnderecoId",
                 table: "Pessoas",
@@ -61,6 +102,12 @@ namespace ProjAPICarro.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Funcionario");
+
+            migrationBuilder.DropTable(
+                name: "Cargo");
+
             migrationBuilder.DropTable(
                 name: "Pessoas");
 

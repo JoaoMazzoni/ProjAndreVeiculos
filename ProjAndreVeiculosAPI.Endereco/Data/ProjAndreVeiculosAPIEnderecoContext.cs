@@ -13,7 +13,7 @@ namespace ProjAndreVeiculosAPIEndereco.Data
             : base(options)
         {
         }
-
+        
         public DbSet<Models.Endereco> Endereco { get; set; } = default!;
     }
 }

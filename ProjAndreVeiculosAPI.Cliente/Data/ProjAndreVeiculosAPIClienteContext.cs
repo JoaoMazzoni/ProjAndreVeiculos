@@ -19,7 +19,10 @@ namespace ProjAndreVeiculosAPICliente.Data
 
             // Configura a chave primária na entidade raiz Pessoa
             modelBuilder.Entity<Pessoa>().HasKey(p => p.Documento);
+            modelBuilder.Entity<Models.Cliente>().ToTable("Cliente");
         }
         public DbSet<Models.Cliente> Cliente { get; set; } = default!;
+        public DbSet<Models.Pessoa>? Pessoas { get; set; } = default!;
+
     }
 }

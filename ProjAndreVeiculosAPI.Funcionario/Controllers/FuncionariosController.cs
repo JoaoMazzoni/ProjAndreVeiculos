@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using ProjAndreVeiculosAPIEndereco.Controllers;
 using ProjAndreVeiculosAPIFuncionario.Data;
 
 namespace ProjAndreVeiculosAPIFuncionario.Controllers
@@ -15,10 +16,12 @@ namespace ProjAndreVeiculosAPIFuncionario.Controllers
     public class FuncionariosController : ControllerBase
     {
         private readonly ProjAndreVeiculosAPIFuncionarioContext _context;
+        private readonly EnderecosController _enderecoController;
 
-        public FuncionariosController(ProjAndreVeiculosAPIFuncionarioContext context)
+        public FuncionariosController(ProjAndreVeiculosAPIFuncionarioContext context, EnderecosController enderecoController)
         {
             _context = context;
+            _enderecoController = enderecoController;
         }
 
         // GET: api/Funcionarios
@@ -86,10 +89,24 @@ namespace ProjAndreVeiculosAPIFuncionario.Controllers
         [HttpPost]
         public async Task<ActionResult<Funcionario>> PostFuncionario(Funcionario funcionario)
         {
-          if (_context.Funcionario == null)
-          {
-              return Problem("Entity set 'ProjAndreVeiculosAPIFuncionarioContext.Funcionario'  is null.");
-          }
+            if (_context.Funcionario == null)
+            {
+                return Problem("Entity set 'ProjAndreVeiculosAPIFuncionarioContext.Funcionario' is null.");
+            }
+
+            // Obter e preencher as informações do endereço com base no CEP
+            var enderecoResult = await _enderecoController.ObterEnderecoPorCepAsync(funcionario.Endereco.CEP);
+            if (enderecoResult.Value == null)
+            {
+                return BadRequest("CEP inválido ou não encontrado.");
+            }
+            funcionario.Endereco.Logradouro = enderecoResult.Value.Logradouro;
+            funcionario.Endereco.Bairro = enderecoResult.Value.Bairro;
+            funcionario.Endereco.Uf = enderecoResult.Value.Uf;
+            funcionario.Endereco.Cidade = enderecoResult.Value.Cidade;
+            funcionario.Endereco.TipoLogradouro = enderecoResult.Value.TipoLogradouro;
+            // Preencha outros campos de endereço conforme necessário
+
             _context.Funcionario.Add(funcionario);
             try
             {

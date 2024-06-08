@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjAPICarro.Data;
+using ProjAndreVeiculosAPIFuncionario.Data;
 
 #nullable disable
 
-namespace ProjAPICarro.Migrations
+namespace ProjAndreVeiculosAPIFuncionario.Migrations
 {
-    [DbContext(typeof(ProjAPICarroContext))]
-    [Migration("20240607134955_3Created")]
-    partial class _3Created
+    [DbContext(typeof(ProjAndreVeiculosAPIFuncionarioContext))]
+    [Migration("20240608190450_InitialCreated")]
+    partial class InitialCreated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,33 +39,6 @@ namespace ProjAPICarro.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cargo");
-                });
-
-            modelBuilder.Entity("Models.Carro", b =>
-                {
-                    b.Property<string>("Placa")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AnoFabricacao")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AnoModelo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Cor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Vendido")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Placa");
-
-                    b.ToTable("Carro");
                 });
 
             modelBuilder.Entity("Models.Endereco", b =>
@@ -120,10 +93,6 @@ namespace ProjAPICarro.Migrations
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -144,18 +113,6 @@ namespace ProjAPICarro.Migrations
                     b.HasIndex("EnderecoId");
 
                     b.ToTable("Pessoas");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Pessoa");
-                });
-
-            modelBuilder.Entity("Models.Cliente", b =>
-                {
-                    b.HasBaseType("Models.Pessoa");
-
-                    b.Property<decimal>("Renda")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasDiscriminator().HasValue("Cliente");
                 });
 
             modelBuilder.Entity("Models.Funcionario", b =>
@@ -173,7 +130,7 @@ namespace ProjAPICarro.Migrations
 
                     b.HasIndex("CargoId");
 
-                    b.HasDiscriminator().HasValue("Funcionario");
+                    b.ToTable("Funcionario", (string)null);
                 });
 
             modelBuilder.Entity("Models.Pessoa", b =>
@@ -193,6 +150,12 @@ namespace ProjAPICarro.Migrations
                         .WithMany()
                         .HasForeignKey("CargoId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Pessoa", null)
+                        .WithOne()
+                        .HasForeignKey("Models.Funcionario", "Documento")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Cargo");

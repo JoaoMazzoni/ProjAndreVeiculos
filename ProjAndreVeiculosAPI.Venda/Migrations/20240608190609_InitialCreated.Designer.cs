@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjAPICarro.Data;
+using ProjAndreVeiculosAPIVenda.Data;
 
 #nullable disable
 
-namespace ProjAPICarro.Migrations
+namespace ProjAndreVeiculosAPIVenda.Migrations
 {
-    [DbContext(typeof(ProjAPICarroContext))]
-    [Migration("20240607223817_1Created")]
-    partial class _1Created
+    [DbContext(typeof(ProjAndreVeiculosAPIVendaContext))]
+    [Migration("20240608190609_InitialCreated")]
+    partial class InitialCreated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,29 +87,6 @@ namespace ProjAPICarro.Migrations
                     b.ToTable("Carro");
                 });
 
-            modelBuilder.Entity("Models.CarroServico", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarroPlaca")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ServicoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarroPlaca");
-
-                    b.HasIndex("ServicoId");
-
-                    b.ToTable("CarroServico");
-                });
-
             modelBuilder.Entity("Models.Cartao", b =>
                 {
                     b.Property<string>("NumeroCartao")
@@ -132,28 +109,37 @@ namespace ProjAPICarro.Migrations
                     b.ToTable("Cartao");
                 });
 
-            modelBuilder.Entity("Models.Compra", b =>
+            modelBuilder.Entity("Models.Cliente", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CarroPlaca")
+                    b.Property<string>("Documento")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DataCompra")
+                    b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Preco")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Renda")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CarroPlaca");
+                    b.HasKey("Documento");
 
-                    b.ToTable("Compra");
+                    b.HasIndex("EnderecoId");
+
+                    b.ToTable("Cliente");
                 });
 
             modelBuilder.Entity("Models.Endereco", b =>
@@ -200,6 +186,47 @@ namespace ProjAPICarro.Migrations
                     b.ToTable("Endereco");
                 });
 
+            modelBuilder.Entity("Models.Funcionario", b =>
+                {
+                    b.Property<string>("Documento")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CargoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Comissao")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("ValorComissao")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Documento");
+
+                    b.HasIndex("CargoId");
+
+                    b.HasIndex("EnderecoId");
+
+                    b.ToTable("Funcionario");
+                });
+
             modelBuilder.Entity("Models.Pagamento", b =>
                 {
                     b.Property<int>("Id")
@@ -212,6 +239,7 @@ namespace ProjAPICarro.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CartaoNumeroCartao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DataPagamento")
@@ -229,42 +257,6 @@ namespace ProjAPICarro.Migrations
                     b.HasIndex("PixId");
 
                     b.ToTable("Pagamento");
-                });
-
-            modelBuilder.Entity("Models.Pessoa", b =>
-                {
-                    b.Property<string>("Documento")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EnderecoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Documento");
-
-                    b.HasIndex("EnderecoId");
-
-                    b.ToTable("Pessoas");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Pessoa");
                 });
 
             modelBuilder.Entity("Models.Pix", b =>
@@ -287,23 +279,6 @@ namespace ProjAPICarro.Migrations
                     b.HasIndex("TipoId");
 
                     b.ToTable("Pix");
-                });
-
-            modelBuilder.Entity("Models.Servico", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Servico");
                 });
 
             modelBuilder.Entity("Models.TipoPix", b =>
@@ -332,15 +307,18 @@ namespace ProjAPICarro.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CarroPlaca")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClienteDocumento")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FuncionarioDocumento")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PagamentoId")
@@ -364,56 +342,32 @@ namespace ProjAPICarro.Migrations
 
             modelBuilder.Entity("Models.Cliente", b =>
                 {
-                    b.HasBaseType("Models.Pessoa");
+                    b.HasOne("Models.Endereco", "Endereco")
+                        .WithMany()
+                        .HasForeignKey("EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<decimal>("Renda")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasDiscriminator().HasValue("Cliente");
+                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("Models.Funcionario", b =>
                 {
-                    b.HasBaseType("Models.Pessoa");
-
-                    b.Property<int>("CargoId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Comissao")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ValorComissao")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasIndex("CargoId");
-
-                    b.HasDiscriminator().HasValue("Funcionario");
-                });
-
-            modelBuilder.Entity("Models.CarroServico", b =>
-                {
-                    b.HasOne("Models.Carro", "Carro")
+                    b.HasOne("Models.Cargo", "Cargo")
                         .WithMany()
-                        .HasForeignKey("CarroPlaca");
-
-                    b.HasOne("Models.Servico", "Servico")
-                        .WithMany()
-                        .HasForeignKey("ServicoId")
+                        .HasForeignKey("CargoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Carro");
-
-                    b.Navigation("Servico");
-                });
-
-            modelBuilder.Entity("Models.Compra", b =>
-                {
-                    b.HasOne("Models.Carro", "Carro")
+                    b.HasOne("Models.Endereco", "Endereco")
                         .WithMany()
-                        .HasForeignKey("CarroPlaca");
+                        .HasForeignKey("EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Carro");
+                    b.Navigation("Cargo");
+
+                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("Models.Pagamento", b =>
@@ -426,7 +380,9 @@ namespace ProjAPICarro.Migrations
 
                     b.HasOne("Models.Cartao", "Cartao")
                         .WithMany()
-                        .HasForeignKey("CartaoNumeroCartao");
+                        .HasForeignKey("CartaoNumeroCartao")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Models.Pix", "Pix")
                         .WithMany()
@@ -439,17 +395,6 @@ namespace ProjAPICarro.Migrations
                     b.Navigation("Cartao");
 
                     b.Navigation("Pix");
-                });
-
-            modelBuilder.Entity("Models.Pessoa", b =>
-                {
-                    b.HasOne("Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("Models.Pix", b =>
@@ -467,15 +412,21 @@ namespace ProjAPICarro.Migrations
                 {
                     b.HasOne("Models.Carro", "Carro")
                         .WithMany()
-                        .HasForeignKey("CarroPlaca");
+                        .HasForeignKey("CarroPlaca")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Models.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteDocumento");
+                        .HasForeignKey("ClienteDocumento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Models.Funcionario", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioDocumento");
+                        .HasForeignKey("FuncionarioDocumento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Models.Pagamento", "Pagamento")
                         .WithMany()
@@ -490,17 +441,6 @@ namespace ProjAPICarro.Migrations
                     b.Navigation("Funcionario");
 
                     b.Navigation("Pagamento");
-                });
-
-            modelBuilder.Entity("Models.Funcionario", b =>
-                {
-                    b.HasOne("Models.Cargo", "Cargo")
-                        .WithMany()
-                        .HasForeignKey("CargoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cargo");
                 });
 #pragma warning restore 612, 618
         }

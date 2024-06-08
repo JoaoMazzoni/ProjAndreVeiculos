@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjAPICarro.Data;
+using ProjAndreVeiculosAPIFuncionario.Data;
 
 #nullable disable
 
-namespace ProjAPICarro.Migrations
+namespace ProjAndreVeiculosAPIFuncionario.Migrations
 {
-    [DbContext(typeof(ProjAPICarroContext))]
-    [Migration("20240607132916_2Created")]
-    partial class _2Created
+    [DbContext(typeof(ProjAndreVeiculosAPIFuncionarioContext))]
+    partial class ProjAndreVeiculosAPIFuncionarioContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,31 +22,21 @@ namespace ProjAPICarro.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Models.Carro", b =>
+            modelBuilder.Entity("Models.Cargo", b =>
                 {
-                    b.Property<string>("Placa")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AnoFabricacao")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AnoModelo")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Cor")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.Property<bool>("Vendido")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Placa");
-
-                    b.ToTable("Carro");
+                    b.ToTable("Cargo");
                 });
 
             modelBuilder.Entity("Models.Endereco", b =>
@@ -103,10 +91,6 @@ namespace ProjAPICarro.Migrations
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -127,18 +111,24 @@ namespace ProjAPICarro.Migrations
                     b.HasIndex("EnderecoId");
 
                     b.ToTable("Pessoas");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Pessoa");
                 });
 
-            modelBuilder.Entity("Models.Cliente", b =>
+            modelBuilder.Entity("Models.Funcionario", b =>
                 {
                     b.HasBaseType("Models.Pessoa");
 
-                    b.Property<decimal>("Renda")
+                    b.Property<int>("CargoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Comissao")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasDiscriminator().HasValue("Cliente");
+                    b.Property<decimal>("ValorComissao")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasIndex("CargoId");
+
+                    b.ToTable("Funcionario", (string)null);
                 });
 
             modelBuilder.Entity("Models.Pessoa", b =>
@@ -150,6 +140,23 @@ namespace ProjAPICarro.Migrations
                         .IsRequired();
 
                     b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("Models.Funcionario", b =>
+                {
+                    b.HasOne("Models.Cargo", "Cargo")
+                        .WithMany()
+                        .HasForeignKey("CargoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.Pessoa", null)
+                        .WithOne()
+                        .HasForeignKey("Models.Funcionario", "Documento")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Cargo");
                 });
 #pragma warning restore 612, 618
         }
