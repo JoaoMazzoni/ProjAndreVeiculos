@@ -13,6 +13,7 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class EnderecosController : ControllerBase
     {
         private readonly ProjAndreVeiculosAPIEnderecoContext _context;
@@ -143,3 +144,7 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         }
     }
 }
+
+
+
+
