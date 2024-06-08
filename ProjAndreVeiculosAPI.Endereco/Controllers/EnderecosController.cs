@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Newtonsoft.Json;
 using ProjAndreVeiculosAPIEndereco.Data;
 
 namespace ProjAndreVeiculosAPIEndereco.Controllers
@@ -25,10 +26,10 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Endereco>>> GetEndereco()
         {
-          if (_context.Endereco == null)
-          {
-              return NotFound();
-          }
+            if (_context.Endereco == null)
+            {
+                return NotFound();
+            }
             return await _context.Endereco.ToListAsync();
         }
 
@@ -36,10 +37,10 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Endereco>> GetEndereco(int id)
         {
-          if (_context.Endereco == null)
-          {
-              return NotFound();
-          }
+            if (_context.Endereco == null)
+            {
+                return NotFound();
+            }
             var endereco = await _context.Endereco.FindAsync(id);
 
             if (endereco == null)
@@ -86,10 +87,10 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         [HttpPost]
         public async Task<ActionResult<Endereco>> PostEndereco(Endereco endereco)
         {
-          if (_context.Endereco == null)
-          {
-              return Problem("Entity set 'ProjAndreVeiculosAPIEnderecoContext.Endereco'  is null.");
-          }
+            if (_context.Endereco == null)
+            {
+                return Problem("Entity set 'ProjAndreVeiculosAPIEnderecoContext.Endereco'  is null.");
+            }
             _context.Endereco.Add(endereco);
             await _context.SaveChangesAsync();
 
@@ -119,6 +120,26 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         private bool EnderecoExists(int id)
         {
             return (_context.Endereco?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpGet("cep/{cep}")]
+        public async Task<ActionResult<Endereco>> ObterEnderecoPorCepAsync(string cep)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://viacep.com.br/");
+                var response = await client.GetAsync($"ws/{cep}/json/");
+                if (response.IsSuccessStatusCode)
+                {
+                    var stringResult = await response.Content.ReadAsStringAsync();
+                    var endereco = JsonConvert.DeserializeObject<Endereco>(stringResult);
+                    return endereco;
+                }
+                else
+                {
+                    return NotFound("Erro ao obter endereço do serviço ViaCEP");
+                }
+            }
         }
     }
 }

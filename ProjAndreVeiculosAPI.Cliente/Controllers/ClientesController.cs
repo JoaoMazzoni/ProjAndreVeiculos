@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using ProjAndreVeiculosAPICliente.Data;
+using ProjAndreVeiculosAPIEndereco.Controllers;
 
 namespace ProjAndreVeiculosAPICliente.Controllers
 {
@@ -15,20 +15,22 @@ namespace ProjAndreVeiculosAPICliente.Controllers
     public class ClientesController : ControllerBase
     {
         private readonly ProjAndreVeiculosAPIClienteContext _context;
+        private readonly EnderecosController _enderecoController;
 
-        public ClientesController(ProjAndreVeiculosAPIClienteContext context)
+        public ClientesController(ProjAndreVeiculosAPIClienteContext context, EnderecosController enderecoController)
         {
             _context = context;
+            _enderecoController = enderecoController;
         }
 
         // GET: api/Clientes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetCliente()
         {
-          if (_context.Cliente == null)
-          {
-              return NotFound();
-          }
+            if (_context.Cliente == null)
+            {
+                return NotFound();
+            }
             return await _context.Cliente.Include(e => e.Endereco).ToListAsync();
         }
 
@@ -36,11 +38,13 @@ namespace ProjAndreVeiculosAPICliente.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(string id)
         {
-          if (_context.Cliente == null)
-          {
-              return NotFound();
-          }
-            var cliente = await _context.Cliente.Include(e => e.Endereco).Where(c => c.Documento == id).SingleOrDefaultAsync(c => c.Documento == id);
+            if (_context.Cliente == null)
+            {
+                return NotFound();
+            }
+            var cliente = await _context.Cliente.Include(e => e.Endereco)
+                                                .Where(c => c.Documento == id)
+                                                .SingleOrDefaultAsync(c => c.Documento == id);
 
             if (cliente == null)
             {
@@ -82,30 +86,28 @@ namespace ProjAndreVeiculosAPICliente.Controllers
         }
 
         // POST: api/Clientes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
-          if (_context.Cliente == null)
-          {
-              return Problem("Entity set 'ProjAndreVeiculosAPIClienteContext.Cliente'  is null.");
-          }
+            if (_context.Cliente == null)
+            {
+                return Problem("Entity set 'ProjAndreVeiculosAPIClienteContext.Cliente' is null.");
+            }
+
+            // Obter e preencher as informações do endereço com base no CEP
+            var enderecoResult = await _enderecoController.ObterEnderecoPorCepAsync(cliente.Endereco.CEP);
+            if (enderecoResult.Value == null)
+            {
+                return BadRequest("CEP inválido ou não encontrado.");
+            }
+            cliente.Endereco.Logradouro = enderecoResult.Value.Logradouro;
+            cliente.Endereco.Bairro = enderecoResult.Value.Bairro;
+            cliente.Endereco.Uf = enderecoResult.Value.Uf;
+            cliente.Endereco.Cidade = enderecoResult.Value.Cidade;
+            // Preencha outros campos de endereço conforme necessário
+
             _context.Cliente.Add(cliente);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ClienteExists(cliente.Documento))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCliente", new { id = cliente.Documento }, cliente);
         }
