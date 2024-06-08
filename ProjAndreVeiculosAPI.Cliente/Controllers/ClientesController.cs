@@ -24,6 +24,7 @@ namespace ProjAndreVeiculosAPICliente.Controllers
         }
 
         // GET: api/Clientes
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetCliente()
         {
@@ -35,6 +36,7 @@ namespace ProjAndreVeiculosAPICliente.Controllers
         }
 
         // GET: api/Clientes/5
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(string id)
         {
@@ -104,6 +106,7 @@ namespace ProjAndreVeiculosAPICliente.Controllers
             cliente.Endereco.Bairro = enderecoResult.Value.Bairro;
             cliente.Endereco.Uf = enderecoResult.Value.Uf;
             cliente.Endereco.Cidade = enderecoResult.Value.Cidade;
+            cliente.Endereco.TipoLogradouro = enderecoResult.Value.TipoLogradouro;
             // Preencha outros campos de endereço conforme necessário
 
             _context.Cliente.Add(cliente);
