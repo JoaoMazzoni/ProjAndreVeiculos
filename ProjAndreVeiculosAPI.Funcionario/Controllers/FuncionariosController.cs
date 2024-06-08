@@ -29,7 +29,7 @@ namespace ProjAndreVeiculosAPIFuncionario.Controllers
           {
               return NotFound();
           }
-            return await _context.Funcionario.ToListAsync();
+            return await _context.Funcionario.Include(c => c.Cargo).Include(e => e.Endereco).ToListAsync();
         }
 
         // GET: api/Funcionarios/5
@@ -40,7 +40,7 @@ namespace ProjAndreVeiculosAPIFuncionario.Controllers
           {
               return NotFound();
           }
-            var funcionario = await _context.Funcionario.FindAsync(id);
+            var funcionario = await _context.Funcionario.Include(c => c.Cargo).Include(e => e.Endereco).Where(f => f.Documento == id).SingleOrDefaultAsync(f => f.Documento == id);
 
             if (funcionario == null)
             {

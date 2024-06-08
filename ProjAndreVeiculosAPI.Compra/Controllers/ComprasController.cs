@@ -29,7 +29,7 @@ namespace ProjAndreVeiculosAPICompra.Controllers
           {
               return NotFound();
           }
-            return await _context.Compra.ToListAsync();
+            return await _context.Compra.Include(c => c.Carro).ToListAsync();
         }
 
         // GET: api/Compras/5
@@ -40,7 +40,7 @@ namespace ProjAndreVeiculosAPICompra.Controllers
           {
               return NotFound();
           }
-            var compra = await _context.Compra.FindAsync(id);
+            var compra = await _context.Compra.Include(c => c.Carro).Where(com => com.Id == id).SingleOrDefaultAsync(com => com.Id == id);
 
             if (compra == null)
             {

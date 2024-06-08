@@ -15,5 +15,7 @@ namespace ProjAndreVeiculosAPIPagamento.Data
         }
 
         public DbSet<Models.Pagamento> Pagamento { get; set; } = default!;
+
+        public DbSet<Models.Pix>? Pix { get; set; }
     }
 }

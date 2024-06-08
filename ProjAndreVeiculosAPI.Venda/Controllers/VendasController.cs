@@ -29,7 +29,7 @@ namespace ProjAndreVeiculosAPIVenda.Controllers
           {
               return NotFound();
           }
-            return await _context.Venda.ToListAsync();
+            return await _context.Venda.Include(c => c.Carro).Include(cli => cli.Cliente).Include(f => f.Funcionario).Include(p => p.Pagamento).ToListAsync();
         }
 
         // GET: api/Vendas/5
@@ -40,7 +40,7 @@ namespace ProjAndreVeiculosAPIVenda.Controllers
           {
               return NotFound();
           }
-            var venda = await _context.Venda.FindAsync(id);
+            var venda = await _context.Venda.Include(c => c.Carro).Include(cli => cli.Cliente).Include(f => f.Funcionario).Include(p => p.Pagamento).Where(v => v.Id == id).SingleOrDefaultAsync(v => v.Id == id);
 
             if (venda == null)
             {

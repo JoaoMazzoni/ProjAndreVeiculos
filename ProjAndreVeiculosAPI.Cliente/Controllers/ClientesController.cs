@@ -29,7 +29,7 @@ namespace ProjAndreVeiculosAPICliente.Controllers
           {
               return NotFound();
           }
-            return await _context.Cliente.ToListAsync();
+            return await _context.Cliente.Include(e => e.Endereco).ToListAsync();
         }
 
         // GET: api/Clientes/5
@@ -40,7 +40,7 @@ namespace ProjAndreVeiculosAPICliente.Controllers
           {
               return NotFound();
           }
-            var cliente = await _context.Cliente.FindAsync(id);
+            var cliente = await _context.Cliente.Include(e => e.Endereco).Where(c => c.Documento == id).SingleOrDefaultAsync(c => c.Documento == id);
 
             if (cliente == null)
             {

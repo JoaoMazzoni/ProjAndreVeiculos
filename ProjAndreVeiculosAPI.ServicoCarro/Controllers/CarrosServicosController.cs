@@ -29,7 +29,7 @@ namespace ProjAndreVeiculosAPICarroServico.Controllers
           {
               return NotFound();
           }
-            return await _context.CarroServico.ToListAsync();
+            return await _context.CarroServico.Include(c => c.Carro).Include(s => s.Servico).ToListAsync();
         }
 
         // GET: api/CarrosServicos/5
@@ -40,7 +40,7 @@ namespace ProjAndreVeiculosAPICarroServico.Controllers
           {
               return NotFound();
           }
-            var carroServico = await _context.CarroServico.FindAsync(id);
+            var carroServico = await _context.CarroServico.Include(c => c.Carro).Include(s => s.Servico).Where(cs => cs.Id == id).SingleOrDefaultAsync(cs => cs.Id == id);
 
             if (carroServico == null)
             {
