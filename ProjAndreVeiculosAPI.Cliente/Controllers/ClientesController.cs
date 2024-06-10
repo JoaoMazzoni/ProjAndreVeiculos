@@ -89,7 +89,7 @@ namespace ProjAndreVeiculosAPICliente.Controllers
 
         // POST: api/Clientes
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostCliente([FromBody] Cliente cliente)
         {
             if (_context.Cliente == null)
             {
@@ -106,14 +106,15 @@ namespace ProjAndreVeiculosAPICliente.Controllers
             cliente.Endereco.Bairro = enderecoResult.Value.Bairro;
             cliente.Endereco.Uf = enderecoResult.Value.Uf;
             cliente.Endereco.Cidade = enderecoResult.Value.Cidade;
-            cliente.Endereco.TipoLogradouro = enderecoResult.Value.TipoLogradouro;
             // Preencha outros campos de endereço conforme necessário
 
-            _context.Cliente.Add(cliente);
+            _context.Cliente.Add(cliente);       
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCliente", new { id = cliente.Documento }, cliente);
         }
+
 
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]

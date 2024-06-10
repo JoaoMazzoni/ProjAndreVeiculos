@@ -12,6 +12,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculo
 builder.Services.AddDbContext<ProjAndreVeiculosAPIEnderecoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIEnderecoContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPIEnderecoContext' not found.")));
 
+
 // Registro dos contextos de banco de dados usando a mesma string de conexão
 //var connectionString = builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIClienteContext");
 

@@ -86,7 +86,7 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         // POST: api/Enderecos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Endereco>> PostEndereco(Endereco endereco)
+        public async Task<ActionResult<Endereco>> PostEndereco([FromBody] Endereco endereco)
         {
             if (_context.Endereco == null)
             {
