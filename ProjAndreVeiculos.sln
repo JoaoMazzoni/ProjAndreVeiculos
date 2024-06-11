@@ -5,25 +5,37 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{2B470BB5-4814-4365-81A8-9035F50D8662}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAPICarro", "ProjAPICarro\ProjAPICarro.csproj", "{8AB05E40-318B-477C-9827-C2C737288741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPICliente", "ProjAndreVeiculosAPI.Cliente\ProjAndreVeiculosAPICliente.csproj", "{737EE2BE-307B-4834-8EAA-BCE35A09A4F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPICliente", "ProjAndreVeiculosAPI.Cliente\ProjAndreVeiculosAPICliente.csproj", "{737EE2BE-307B-4834-8EAA-BCE35A09A4F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIFuncionario", "ProjAndreVeiculosAPI.Funcionario\ProjAndreVeiculosAPIFuncionario.csproj", "{EEFBEE3E-5126-46FB-81EC-BD18FA35A2C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPIFuncionario", "ProjAndreVeiculosAPI.Funcionario\ProjAndreVeiculosAPIFuncionario.csproj", "{EEFBEE3E-5126-46FB-81EC-BD18FA35A2C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIPagamento", "ProjAndreVeiculosAPI.Pagamento\ProjAndreVeiculosAPIPagamento.csproj", "{16F745B5-E006-4850-AF7A-CB854EC18901}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPIPagamento", "ProjAndreVeiculosAPI.Pagamento\ProjAndreVeiculosAPIPagamento.csproj", "{16F745B5-E006-4850-AF7A-CB854EC18901}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIServico", "ProjAndreVeiculosAPI.Servico\ProjAndreVeiculosAPIServico.csproj", "{F19CC07D-B229-46FF-91E5-084409A96398}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPIServico", "ProjAndreVeiculosAPI.Servico\ProjAndreVeiculosAPIServico.csproj", "{F19CC07D-B229-46FF-91E5-084409A96398}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIVenda", "ProjAndreVeiculosAPI.Venda\ProjAndreVeiculosAPIVenda.csproj", "{4FA04C2A-2ED1-4ADB-BA5A-B2B08CC1653B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPIVenda", "ProjAndreVeiculosAPI.Venda\ProjAndreVeiculosAPIVenda.csproj", "{4FA04C2A-2ED1-4ADB-BA5A-B2B08CC1653B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPICarro", "ProjAndreVeiculosAPI.Carro\ProjAndreVeiculosAPICarro.csproj", "{A67F1A85-3545-426E-8B2F-5D70B45F9331}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPICarro", "ProjAndreVeiculosAPI.Carro\ProjAndreVeiculosAPICarro.csproj", "{A67F1A85-3545-426E-8B2F-5D70B45F9331}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPICompra", "ProjAndreVeiculosAPI.Compra\ProjAndreVeiculosAPICompra.csproj", "{5BD5594F-F35B-47DE-8288-DB413280C78D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPICompra", "ProjAndreVeiculosAPI.Compra\ProjAndreVeiculosAPICompra.csproj", "{5BD5594F-F35B-47DE-8288-DB413280C78D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPICarroServico", "ProjAndreVeiculosAPI.ServicoCarro\ProjAndreVeiculosAPICarroServico.csproj", "{AF014A2C-CED1-469A-86CB-536DDAF89AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPICarroServico", "ProjAndreVeiculosAPI.ServicoCarro\ProjAndreVeiculosAPICarroServico.csproj", "{AF014A2C-CED1-469A-86CB-536DDAF89AF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIEndereco", "ProjAndreVeiculosAPI.Endereco\ProjAndreVeiculosAPIEndereco.csproj", "{B1A36557-6694-4E28-A372-01AEA593F084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosAPIEndereco", "ProjAndreVeiculosAPI.Endereco\ProjAndreVeiculosAPIEndereco.csproj", "{B1A36557-6694-4E28-A372-01AEA593F084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIDependente", "ProjAndreVeiculosAPICNH\ProjAndreVeiculosAPIDependente.csproj", "{D6958E63-B7B2-4EAB-B70E-3110D06199A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIValidacaoPendenciaFinanceira", "ProjAndreVeiculosAPIValidacaoPendenciaFinanceira\ProjAndreVeiculosAPIValidacaoPendenciaFinanceira.csproj", "{E681131D-E4F2-4BB8-B0E5-E872F0AC5E93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPISeguro", "ProjAndreVeiculosAPISeguro\ProjAndreVeiculosAPISeguro.csproj", "{B6AD5F8F-6070-4DEF-BCB0-C442E03E1F81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPITermoUso", "ProjAndreVeiculosAPITermoUso\ProjAndreVeiculosAPITermoUso.csproj", "{1BF4E8F4-7D15-4CE5-872E-64B39B7630D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIFinanciamento", "ProjAndreVeiculosAPIFinanciamento\ProjAndreVeiculosAPIFinanciamento.csproj", "{983B5F0F-9F98-47DD-A9E7-3936B1AEF89E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIBanco", "ProjAndreVeiculosAPIBanco\ProjAndreVeiculosAPIBanco.csproj", "{DFA8F534-2B2E-40C6-BB37-7876BF72E4D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPICondutor", "ProjAndreVeiculosAPICondutor\ProjAndreVeiculosAPICondutor.csproj", "{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +47,6 @@ Global
 		{2B470BB5-4814-4365-81A8-9035F50D8662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B470BB5-4814-4365-81A8-9035F50D8662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B470BB5-4814-4365-81A8-9035F50D8662}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AB05E40-318B-477C-9827-C2C737288741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AB05E40-318B-477C-9827-C2C737288741}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AB05E40-318B-477C-9827-C2C737288741}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AB05E40-318B-477C-9827-C2C737288741}.Release|Any CPU.Build.0 = Release|Any CPU
 		{737EE2BE-307B-4834-8EAA-BCE35A09A4F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{737EE2BE-307B-4834-8EAA-BCE35A09A4F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{737EE2BE-307B-4834-8EAA-BCE35A09A4F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +83,34 @@ Global
 		{B1A36557-6694-4E28-A372-01AEA593F084}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1A36557-6694-4E28-A372-01AEA593F084}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1A36557-6694-4E28-A372-01AEA593F084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6958E63-B7B2-4EAB-B70E-3110D06199A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6958E63-B7B2-4EAB-B70E-3110D06199A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6958E63-B7B2-4EAB-B70E-3110D06199A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6958E63-B7B2-4EAB-B70E-3110D06199A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E681131D-E4F2-4BB8-B0E5-E872F0AC5E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E681131D-E4F2-4BB8-B0E5-E872F0AC5E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E681131D-E4F2-4BB8-B0E5-E872F0AC5E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E681131D-E4F2-4BB8-B0E5-E872F0AC5E93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6AD5F8F-6070-4DEF-BCB0-C442E03E1F81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6AD5F8F-6070-4DEF-BCB0-C442E03E1F81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6AD5F8F-6070-4DEF-BCB0-C442E03E1F81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6AD5F8F-6070-4DEF-BCB0-C442E03E1F81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BF4E8F4-7D15-4CE5-872E-64B39B7630D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BF4E8F4-7D15-4CE5-872E-64B39B7630D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BF4E8F4-7D15-4CE5-872E-64B39B7630D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BF4E8F4-7D15-4CE5-872E-64B39B7630D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{983B5F0F-9F98-47DD-A9E7-3936B1AEF89E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{983B5F0F-9F98-47DD-A9E7-3936B1AEF89E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{983B5F0F-9F98-47DD-A9E7-3936B1AEF89E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{983B5F0F-9F98-47DD-A9E7-3936B1AEF89E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFA8F534-2B2E-40C6-BB37-7876BF72E4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFA8F534-2B2E-40C6-BB37-7876BF72E4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFA8F534-2B2E-40C6-BB37-7876BF72E4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFA8F534-2B2E-40C6-BB37-7876BF72E4D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

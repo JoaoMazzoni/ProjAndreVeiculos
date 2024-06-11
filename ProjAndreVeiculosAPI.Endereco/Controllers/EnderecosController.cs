@@ -27,6 +27,12 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
             _enderecoService = enderecoService;
         }
 
+        public EnderecosController(ProjAndreVeiculosAPIEnderecoContext context)
+        {
+            _context = context;
+        }
+
+
         // GET: api/Enderecos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Endereco>>> GetEndereco()

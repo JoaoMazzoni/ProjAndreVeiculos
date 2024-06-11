@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Cliente : Pessoa
+    public class Categoria
     {
-        public Decimal Renda { get; set; }
-        public string DocumentoPDF { get; set; }
+        public long Id { get; set; }
+        public string Descricao { get; set; }
     }
 }
