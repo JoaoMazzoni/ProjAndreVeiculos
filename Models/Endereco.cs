@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace Models
 {
     public class Endereco
     {
+        
         [BsonIgnore]
         [BsonRepresentation(BsonType.ObjectId)]
-        [JsonProperty("id")]
         public int Id { get; set; }
 
         [JsonProperty("logradouro")]

@@ -110,8 +110,6 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
 
                     _context.Endereco.Add(end);
 
-                    
-
                     await _context.SaveChangesAsync();
                 }
                 else
