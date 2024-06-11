@@ -13,7 +13,11 @@ namespace ProjAndreVeiculosAPIEndereco.Data
             : base(options)
         {
         }
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Endereco>().HasKey(p => p.Id);
+        }
         public DbSet<Models.Endereco> Endereco { get; set; } = default!;
     }
 }

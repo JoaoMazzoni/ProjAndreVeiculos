@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using Newtonsoft.Json;
 using ProjAndreVeiculosAPIEndereco.Data;
+using ProjAndreVeiculosAPIEndereco.Services;
 
 namespace ProjAndreVeiculosAPIEndereco.Controllers
 {
@@ -17,10 +19,12 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
     public class EnderecosController : ControllerBase
     {
         private readonly ProjAndreVeiculosAPIEnderecoContext _context;
+        private readonly EnderecoService _enderecoService;
 
-        public EnderecosController(ProjAndreVeiculosAPIEnderecoContext context)
+        public EnderecosController(ProjAndreVeiculosAPIEnderecoContext context, EnderecoService enderecoService)
         {
             _context = context;
+            _enderecoService = enderecoService;
         }
 
         // GET: api/Enderecos
@@ -90,13 +94,35 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         {
             if (_context.Endereco == null)
             {
-                return Problem("Entity set 'ProjAndreVeiculosAPIEnderecoContext.Endereco'  is null.");
+                return Problem("Entity set 'ProjAndreVeiculosAPIEnderecoContext.Endereco' is null.");
             }
-            _context.Endereco.Add(endereco);
-            await _context.SaveChangesAsync();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://viacep.com.br/");
+                var response = await client.GetAsync($"ws/{endereco.CEP}/json/");
+                if (response.IsSuccessStatusCode)
+                {
+                    var stringResult = await response.Content.ReadAsStringAsync();
+                    var end = JsonConvert.DeserializeObject<Endereco>(stringResult);
+
+                    _enderecoService.Create(end);
+
+                    _context.Endereco.Add(end);
+
+                    
+
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    return NotFound("Erro ao obter endereço do serviço ViaCEP");
+                }
+            }
 
             return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
         }
+
 
         // DELETE: api/Enderecos/5
         [HttpDelete("{id}")]

@@ -1,20 +1,34 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ProjAndreVeiculosAPIEndereco.Data;
+using ProjAndreVeiculosAPIEndereco.Services;
+using ProjAndreVeiculosAPIEndereco.Utilis;
+
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddDbContext<ProjAndreVeiculosAPIEnderecoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIEnderecoContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPIEnderecoContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIEnderecoContext")
+    ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPIEnderecoContext' not found.")));
 
-// Add services to the container.
 
+
+// Adicionar controladores ao contêiner de dependências
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<ProjMongoDBAPIDataBaseSettings>(
+               builder.Configuration.GetSection(nameof(ProjMongoDBAPIDataBaseSettings)));
+
+builder.Services.AddSingleton<IProjMongoDBAPIDataBaseSettings>(sp =>
+    sp.GetRequiredService<IOptions<ProjMongoDBAPIDataBaseSettings>>().Value);
+
+builder.Services.AddSingleton<EnderecoService>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar o pipeline de requisições HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

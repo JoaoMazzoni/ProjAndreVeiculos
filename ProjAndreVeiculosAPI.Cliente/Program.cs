@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ProjAndreVeiculosAPICliente.Controllers;
 using ProjAndreVeiculosAPICliente.Data;
 using ProjAndreVeiculosAPIEndereco.Controllers;
 using ProjAndreVeiculosAPIEndereco.Data;
+using ProjAndreVeiculosAPIEndereco.Services;
+using ProjAndreVeiculosAPIEndereco.Utilis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,15 +16,16 @@ builder.Services.AddDbContext<ProjAndreVeiculosAPIEnderecoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIEnderecoContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPIEnderecoContext' not found.")));
 
 
-// Registro dos contextos de banco de dados usando a mesma string de conexão
-//var connectionString = builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIClienteContext");
+builder.Services.AddControllers();
 
-//builder.Services.AddDbContext<ProjAndreVeiculosAPIClienteContext>(options =>
-//    options.UseSqlServer(connectionString));
+builder.Services.Configure<ProjMongoDBAPIDataBaseSettings>(
+               builder.Configuration.GetSection(nameof(ProjMongoDBAPIDataBaseSettings)));
 
-//builder.Services.AddDbContext<ProjAndreVeiculosAPIEnderecoContext>(options =>
-//    options.UseSqlServer(connectionString));
+builder.Services.AddSingleton<IProjMongoDBAPIDataBaseSettings>(sp =>
+    (IProjMongoDBAPIDataBaseSettings)sp.GetRequiredService<IOptions<ProjMongoDBAPIDataBaseSettings>>().Value);
 
+
+builder.Services.AddSingleton<EnderecoService>();
 
 
 // Adicionar controladores ao contêiner de dependências
