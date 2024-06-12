@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Models;
+using ProjAndreVeiculosAPICliente.Controllers;
+using ProjAndreVeiculosAPIDependente.Services;
 
 namespace ProjAndreVeiculosAPIDependente.Repositories
 {
@@ -7,12 +9,15 @@ namespace ProjAndreVeiculosAPIDependente.Repositories
     {
         static private string _connectionString;
         static private SqlConnection _conn;
-
-        public DependenteRepository(IConfiguration configuration)
+        private readonly EnderecoService _enderecoService;
+        
+        public DependenteRepository(IConfiguration configuration, EnderecoService enderecoService)
         {
             _connectionString = configuration.GetConnectionString("ProjAndreVeiculosAPIDependenteContext");
             _conn = new SqlConnection(_connectionString);
             _conn.Open();
+            _enderecoService = enderecoService;
+
         }
 
         public async Task<IEnumerable<Dependente>> GetAll()
@@ -46,7 +51,7 @@ namespace ProjAndreVeiculosAPIDependente.Repositories
 
             using (SqlCommand cmd = new SqlCommand(Dependente.GET, _conn))
             {
-                cmd.Parameters.AddWithValue("@Document", documento);
+                cmd.Parameters.AddWithValue("@Documento", documento);
 
                 using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                 {
@@ -76,18 +81,22 @@ namespace ProjAndreVeiculosAPIDependente.Repositories
                 cmd.Parameters.AddWithValue("@DataNascimento", dependente.DataNascimento);
                 cmd.Parameters.AddWithValue("@Telefone", dependente.Telefone);
                 cmd.Parameters.AddWithValue("@Email", dependente.Email);
+                
                 await cmd.ExecuteNonQueryAsync();
             }
 
+            Endereco endereco = _enderecoService.PostEndereco(dependente.Endereco).Result;
+            dependente.Endereco = endereco;
+
+
             using (SqlCommand cmd = new SqlCommand(Dependente.INSERT, _conn))
             {
-                cmd.Parameters.AddWithValue("@Documento", dependente.Documento);
-                cmd.Parameters.AddWithValue("@Nome", dependente.Nome);
-                cmd.Parameters.AddWithValue("@DataNascimento", dependente.DataNascimento);
-                cmd.Parameters.AddWithValue("@Telefone", dependente.Telefone);
-                cmd.Parameters.AddWithValue("@Email", dependente.Email);
+                cmd.Parameters.AddWithValue("@Dependente", dependente.Documento);
+                cmd.Parameters.AddWithValue("@Cliente", dependente.Cliente.Documento);
                 await cmd.ExecuteNonQueryAsync();
             }
+
+
         }
 
         public async Task Update(Dependente dependente)
@@ -102,6 +111,8 @@ namespace ProjAndreVeiculosAPIDependente.Repositories
                 await cmd.ExecuteNonQueryAsync();
             }
         }
+
+
 
         public async Task DeleteAsync(string documento)
         {

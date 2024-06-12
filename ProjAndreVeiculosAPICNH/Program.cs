@@ -15,7 +15,7 @@ builder.Services.AddScoped<DependenteService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddScoped<EnderecoService>();
 
 var app = builder.Build();
 

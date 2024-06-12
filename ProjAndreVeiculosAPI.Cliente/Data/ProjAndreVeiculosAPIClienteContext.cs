@@ -23,6 +23,7 @@ namespace ProjAndreVeiculosAPICliente.Data
         }
         public DbSet<Models.Cliente>? Cliente { get; set; } = default!;
         public DbSet<Models.Pessoa>? Pessoas { get; set; } = default!;
+        public DbSet<Models.Endereco>? Endereco { get; set; } = default!;
 
     }
 }

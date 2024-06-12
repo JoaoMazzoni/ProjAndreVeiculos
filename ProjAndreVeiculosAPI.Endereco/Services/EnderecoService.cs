@@ -17,7 +17,6 @@ namespace ProjAndreVeiculosAPIEndereco.Services
             _endereco = database.GetCollection<Endereco>(settings.AddressCollectionName);
         }
 
-
         public Endereco Create(Endereco address)
         {
             _endereco.InsertOne(address);

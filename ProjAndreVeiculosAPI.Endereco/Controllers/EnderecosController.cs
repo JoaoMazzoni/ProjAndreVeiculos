@@ -21,6 +21,7 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
         private readonly ProjAndreVeiculosAPIEnderecoContext _context;
         private readonly EnderecoService _enderecoService;
 
+
         public EnderecosController(ProjAndreVeiculosAPIEnderecoContext context, EnderecoService enderecoService)
         {
             _context = context;

@@ -23,8 +23,9 @@ namespace ProjAndreVeiculosAPICliente.Controllers
             _enderecoController = enderecoController;
         }
 
+
         // GET: api/Clientes
-        
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetCliente()
         {
