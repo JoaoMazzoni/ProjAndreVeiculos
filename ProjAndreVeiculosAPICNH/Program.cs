@@ -1,3 +1,4 @@
+using Models;
 using ProjAndreVeiculosAPIDependente.Repositories;
 using ProjAndreVeiculosAPIDependente.Services;
 
@@ -13,6 +14,7 @@ builder.Services.AddScoped<DependenteService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 
 var app = builder.Build();

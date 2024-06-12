@@ -37,7 +37,7 @@ namespace ProjAndreVeiculosAPIDependente.Controllers
         public async Task<ActionResult> PostDependente(Dependente dependente)
         {
             await _dependenteService.Add(dependente);
-            return CreatedAtAction(nameof(GetDependente), new { document = dependente.Documento }, dependente);
+            return CreatedAtAction(nameof(GetDependente), new { documento = dependente.Documento }, dependente);
         }
 
         [HttpPut("{documento}")]

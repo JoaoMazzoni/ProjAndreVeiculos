@@ -78,6 +78,16 @@ namespace ProjAndreVeiculosAPIDependente.Repositories
                 cmd.Parameters.AddWithValue("@Email", dependente.Email);
                 await cmd.ExecuteNonQueryAsync();
             }
+
+            using (SqlCommand cmd = new SqlCommand(Dependente.INSERT, _conn))
+            {
+                cmd.Parameters.AddWithValue("@Documento", dependente.Documento);
+                cmd.Parameters.AddWithValue("@Nome", dependente.Nome);
+                cmd.Parameters.AddWithValue("@DataNascimento", dependente.DataNascimento);
+                cmd.Parameters.AddWithValue("@Telefone", dependente.Telefone);
+                cmd.Parameters.AddWithValue("@Email", dependente.Email);
+                await cmd.ExecuteNonQueryAsync();
+            }
         }
 
         public async Task Update(Dependente dependente)
