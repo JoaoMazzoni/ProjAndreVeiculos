@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
     public class Venda
     {
+        [BsonIgnore]
+        [BsonRepresentation(BsonType.ObjectId)]
         public int Id { get; set; }
         public Carro Carro { get; set; }
         public DateTime DataVenda { get; set; }
@@ -15,6 +15,5 @@ namespace Models
         public Cliente Cliente { get; set; }
         public Funcionario Funcionario { get; set; }
         public Pagamento Pagamento { get; set; }
-
     }
 }

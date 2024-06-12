@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace Models
 {
     public class Financiamento
     {
+        [BsonIgnore]
+        [BsonRepresentation(BsonType.ObjectId)]
         public int Id { get; set; }
         public Venda Venda { get; set; }
         public DateTime DataFinanciamento { get; set; }

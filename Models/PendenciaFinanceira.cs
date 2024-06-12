@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
     public class PendenciaFinanceira
     {
-        [Key]
+        [BsonIgnore]
+        [BsonRepresentation(BsonType.ObjectId)]
         public int Id { get; set; }
         public string Descricao { get; set; }
         public decimal Valor { get; set; }
