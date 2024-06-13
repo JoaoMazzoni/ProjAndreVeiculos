@@ -6,9 +6,9 @@ namespace Models
 {
     public class TermoDeUso
     {
-        [BsonIgnore]
+        [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Texto { get; set; }
         public int Versao { get; set; }
         public DateTime DataCadastro {  get; set; }
