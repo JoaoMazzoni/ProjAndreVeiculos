@@ -106,8 +106,9 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
 
             using (var client = new HttpClient())
             {
+                string cep = endereco.CEP;
                 client.BaseAddress = new Uri("https://viacep.com.br/");
-                var response = await client.GetAsync($"ws/{endereco.CEP}/json/");
+                var response = await client.GetAsync($"ws/{cep}/json/");
                 if (response.IsSuccessStatusCode)
                 {
                     var stringResult = await response.Content.ReadAsStringAsync();
