@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjAndreVeiculosAPI.Carro\ProjAndreVeiculosAPICarro.csproj" />
     <ProjectReference Include="..\ProjAndreVeiculosAPI.Endereco\ProjAndreVeiculosAPIEndereco.csproj" />
   </ItemGroup>
 
