@@ -19,7 +19,8 @@ namespace ProjAndreVeiculosAPIEndereco.Services
 
         public Endereco Create(Endereco address)
         {
-            _endereco.InsertOne(address);
+             _endereco.InsertOne(address);
+
             return address;
         }
     }

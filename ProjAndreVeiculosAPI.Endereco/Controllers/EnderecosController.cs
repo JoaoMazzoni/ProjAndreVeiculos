@@ -28,10 +28,7 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
             _enderecoService = enderecoService;
         }
 
-        public EnderecosController(ProjAndreVeiculosAPIEnderecoContext context)
-        {
-            _context = context;
-        }
+        
 
 
         // GET: api/Enderecos
@@ -114,6 +111,8 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
                     var stringResult = await response.Content.ReadAsStringAsync();
                     var end = JsonConvert.DeserializeObject<Endereco>(stringResult);
 
+                    end.TipoLogradouro = "Rua";
+
                     _enderecoService.Create(end);
 
                     _context.Endereco.Add(end);
@@ -125,8 +124,8 @@ namespace ProjAndreVeiculosAPIEndereco.Controllers
                     return NotFound("Erro ao obter endereço do serviço ViaCEP");
                 }
             }
-
-            return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
+            return endereco;
+            //return CreatedAtAction("GetEndereco", new { id = endereco.Id }, endereco);
         }
 
 
