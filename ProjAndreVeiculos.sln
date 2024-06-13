@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPIBanco",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjAndreVeiculosAPICondutor", "ProjAndreVeiculosAPICondutor\ProjAndreVeiculosAPICondutor.csproj", "{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjAndreVeiculosTeste", "ProjAndreVeiculosTeste\ProjAndreVeiculosTeste.csproj", "{7021C427-B6B2-4D63-85F1-71814070FFB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A63D39D4-7BA4-47CB-80C0-3AA575C05DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7021C427-B6B2-4D63-85F1-71814070FFB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7021C427-B6B2-4D63-85F1-71814070FFB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7021C427-B6B2-4D63-85F1-71814070FFB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7021C427-B6B2-4D63-85F1-71814070FFB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
