@@ -6,8 +6,7 @@ namespace Models
 {
     public class Seguro
     {
-        [BsonIgnore]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [Key]
         public int Id { get; set; }
         public Cliente Cliente { get; set; }
         public decimal Franquia { get; set; }

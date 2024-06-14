@@ -1,35 +1,40 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using ProjAndreVeiculosAPICondutor.Controllers;
 using ProjAndreVeiculosAPICondutor.Data;
 using ProjAndreVeiculosAPIEndereco.Controllers;
 using ProjAndreVeiculosAPIEndereco.Data;
 using ProjAndreVeiculosAPIEndereco.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configuração do banco de dados para ProjAndreVeiculosAPICondutorContext
 builder.Services.AddDbContext<ProjAndreVeiculosAPICondutorContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPICondutorContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPICondutorContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPICondutorContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPICondutorContext' not found."))
+);
 
+// Configuração do banco de dados para ProjAndreVeiculosAPIEnderecoContext
 builder.Services.AddDbContext<ProjAndreVeiculosAPIEnderecoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIEnderecoContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPIEnderecoContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIEnderecoContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPIEnderecoContext' not found."))
+);
 
-// Add services to the container.
+// Adiciona serviços necessários
+builder.Services.AddSingleton<EnderecoService>();
 
-builder.Services.AddControllers();
-
-
-// Adicionar controladores ao contêiner de dependências
+// Adiciona controladores
 builder.Services.AddScoped<EnderecosController>();
 builder.Services.AddScoped<CondutoresController>();
+builder.Services.AddScoped<CNHsController>();
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+// Adiciona suporte para Swagger
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuração do pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -37,9 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

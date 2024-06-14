@@ -2,7 +2,7 @@
 
 namespace Models
 {
-    public abstract class Pessoa
+    public class Pessoa
     {
         [Key]
         public string Documento { get; set; }
