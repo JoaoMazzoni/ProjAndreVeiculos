@@ -6,8 +6,7 @@ namespace Models
 {
     public class CNH
     {
-        [BsonIgnore]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [Key]
         public long CNHNumero { get; set; }
         public DateTime DataVencimento { get; set; }
         public string RG { get; set; }

@@ -18,16 +18,19 @@ namespace ProjAndreVeiculosAPICondutor.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Models.Pessoa>().HasKey(p => p.Documento); 
             modelBuilder.Entity<Models.Condutor>().ToTable("Condutor");
+            modelBuilder.Entity<Models.CNH>().HasKey(c => c.CNHNumero);
 
         }
 
         public DbSet<Models.CNH> CNH { get; set; } = default!;
 
-        public DbSet<Models.Condutor>? Condutor { get; set; }
+        public DbSet<Models.Condutor>? Condutor { get; set; } = default!;
 
-        public DbSet<Models.Pessoa> Pessoas { get; set; }
+        public DbSet<Models.Pessoa> Pessoas { get; set; } = default!;
 
-        public DbSet<Models.Endereco>? Endereco { get; set; }
-     
+        public DbSet<Models.Endereco>? Endereco { get; set; } = default!;
+
+        public DbSet<Models.Categoria>? Categoria { get; set; } = default!;
+
     }
 }

@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using ProjAndreVeiculosAPICondutor.Controllers;
 using ProjAndreVeiculosAPICondutor.Data;
 using ProjAndreVeiculosAPIEndereco.Controllers;
 using ProjAndreVeiculosAPIEndereco.Data;
 using ProjAndreVeiculosAPIEndereco.Services;
+using ProjAndreVeiculosAPIEndereco.Utilis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +21,6 @@ builder.Services.AddDbContext<ProjAndreVeiculosAPIEnderecoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProjAndreVeiculosAPIEnderecoContext") ?? throw new InvalidOperationException("Connection string 'ProjAndreVeiculosAPIEnderecoContext' not found."))
 );
 
-// Adiciona serviços necessários
-builder.Services.AddSingleton<EnderecoService>();
 
 // Adiciona controladores
 builder.Services.AddScoped<EnderecosController>();
@@ -28,6 +28,16 @@ builder.Services.AddScoped<CondutoresController>();
 builder.Services.AddScoped<CNHsController>();
 
 builder.Services.AddControllers();
+
+builder.Services.Configure<ProjMongoDBAPIDataBaseSettings>(
+               builder.Configuration.GetSection(nameof(ProjMongoDBAPIDataBaseSettings)));
+
+builder.Services.AddSingleton<IProjMongoDBAPIDataBaseSettings>(sp =>
+    (IProjMongoDBAPIDataBaseSettings)sp.GetRequiredService<IOptions<ProjMongoDBAPIDataBaseSettings>>().Value);
+
+
+builder.Services.AddSingleton<EnderecoService>();
+
 
 // Adiciona suporte para Swagger
 builder.Services.AddSwaggerGen();

@@ -32,7 +32,7 @@ namespace ProjAndreVeiculosAPICondutor.Controllers
           {
               return NotFound();
           }
-            return await _context.Condutor.Include(c => c.CNH).ToListAsync();
+            return await _context.Condutor.Include(c => c.CNH).Include(e => e.Endereco).Include(cat => cat.CNH.Categoria).ToListAsync();
         }
 
         // GET: api/Condutores/5
@@ -43,7 +43,7 @@ namespace ProjAndreVeiculosAPICondutor.Controllers
           {
               return NotFound();
           }
-            var condutor = await _context.Condutor.Include(c => c.CNH).Where(d => d.Documento == documento).SingleOrDefaultAsync(d => d.Documento == documento);
+            var condutor = await _context.Condutor.Include(c => c.CNH).Include(e => e.Endereco).Include(cat => cat.CNH.Categoria).Where(d => d.Documento == documento).SingleOrDefaultAsync(d => d.Documento == documento);
              
 
             if (condutor == null)

@@ -6,8 +6,7 @@ namespace Models
 {
     public class Categoria
     {
-        [BsonIgnore]
-        [BsonRepresentation(BsonType.ObjectId)]
+        [Key]
         public long Id { get; set; }
         public string Descricao { get; set; }
     }

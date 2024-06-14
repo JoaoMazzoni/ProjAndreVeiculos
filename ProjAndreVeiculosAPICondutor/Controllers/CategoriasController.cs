@@ -12,55 +12,55 @@ namespace ProjAndreVeiculosAPICondutor.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CNHsController : ControllerBase
+    public class CategoriasController : ControllerBase
     {
         private readonly ProjAndreVeiculosAPICondutorContext _context;
 
-        public CNHsController(ProjAndreVeiculosAPICondutorContext context)
+        public CategoriasController(ProjAndreVeiculosAPICondutorContext context)
         {
             _context = context;
         }
 
-        // GET: api/CNHs
+        // GET: api/Categorias
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CNH>>> GetCNH()
+        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoria()
         {
-          if (_context.CNH == null)
+          if (_context.Categoria == null)
           {
               return NotFound();
           }
-            return await _context.CNH.Include(c => c.Categoria).ToListAsync();
+            return await _context.Categoria.ToListAsync();
         }
 
-        // GET: api/CNHs/5
+        // GET: api/Categorias/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CNH>> GetCNH(long id)
+        public async Task<ActionResult<Categoria>> GetCategoria(long id)
         {
-          if (_context.CNH == null)
+          if (_context.Categoria == null)
           {
               return NotFound();
           }
-            var cNH = await _context.CNH.Include(c => c.Categoria).Where(cnh => cnh.CNHNumero == id).SingleOrDefaultAsync(cnh => cnh.CNHNumero == id);
+            var categoria = await _context.Categoria.FindAsync(id);
 
-            if (cNH == null)
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            return cNH;
+            return categoria;
         }
 
-        // PUT: api/CNHs/5
+        // PUT: api/Categorias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCNH(long id, CNH cNH)
+        public async Task<IActionResult> PutCategoria(long id, Categoria categoria)
         {
-            if (id != cNH.CNHNumero)
+            if (id != categoria.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cNH).State = EntityState.Modified;
+            _context.Entry(categoria).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace ProjAndreVeiculosAPICondutor.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CNHExists(id))
+                if (!CategoriaExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace ProjAndreVeiculosAPICondutor.Controllers
             return NoContent();
         }
 
-        // POST: api/CNHs
+        // POST: api/Categorias
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CNH>> PostCNH(CNH cNH)
+        public async Task<ActionResult<Categoria>> PostCategoria(Categoria categoria)
         {
-          if (_context.CNH == null)
+          if (_context.Categoria == null)
           {
-              return Problem("Entity set 'ProjAndreVeiculosAPICondutorContext.CNH'  is null.");
+              return Problem("Entity set 'ProjAndreVeiculosAPICondutorContext.Categoria'  is null.");
           }
-            _context.CNH.Add(cNH);
+            _context.Categoria.Add(categoria);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCNH", new { id = cNH.CNHNumero }, cNH);
+            return CreatedAtAction("GetCategoria", new { id = categoria.Id }, categoria);
         }
 
-        // DELETE: api/CNHs/5
+        // DELETE: api/Categorias/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCNH(long id)
+        public async Task<IActionResult> DeleteCategoria(long id)
         {
-            if (_context.CNH == null)
+            if (_context.Categoria == null)
             {
                 return NotFound();
             }
-            var cNH = await _context.CNH.FindAsync(id);
-            if (cNH == null)
+            var categoria = await _context.Categoria.FindAsync(id);
+            if (categoria == null)
             {
                 return NotFound();
             }
 
-            _context.CNH.Remove(cNH);
+            _context.Categoria.Remove(categoria);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CNHExists(long id)
+        private bool CategoriaExists(long id)
         {
-            return (_context.CNH?.Any(e => e.CNHNumero == id)).GetValueOrDefault();
+            return (_context.Categoria?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
