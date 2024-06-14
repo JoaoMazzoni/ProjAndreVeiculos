@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using ProjAndreVeiculosAPICliente.Data;
 using ProjAndreVeiculosAPIEndereco.Controllers;
+using ProjAndreVeiculosAPIEndereco.Services;
 
 namespace ProjAndreVeiculosAPICliente.Controllers
 {
@@ -16,11 +17,13 @@ namespace ProjAndreVeiculosAPICliente.Controllers
     {
         private readonly ProjAndreVeiculosAPIClienteContext _context;
         private readonly EnderecosController _enderecoController;
+        private readonly EnderecoService _enderecoService;
 
-        public ClientesController(ProjAndreVeiculosAPIClienteContext context, EnderecosController enderecoController)
+        public ClientesController(ProjAndreVeiculosAPIClienteContext context, EnderecosController enderecoController, EnderecoService enderecoService)
         {
             _context = context;
             _enderecoController = enderecoController;
+            _enderecoService = enderecoService;
         }
 
 
@@ -109,7 +112,8 @@ namespace ProjAndreVeiculosAPICliente.Controllers
             cliente.Endereco.Cidade = enderecoResult.Value.Cidade;
             // Preencha outros campos de endereço conforme necessário
 
-            _context.Cliente.Add(cliente);       
+            _context.Cliente.Add(cliente);
+            _enderecoService.Create(enderecoResult.Value);  
 
             await _context.SaveChangesAsync();
 

@@ -6,8 +6,6 @@ namespace Models
 {
     public class Servico
     {
-        [BsonIgnore]
-        [BsonRepresentation(BsonType.ObjectId)]
         public int Id { get; set; }
         public string Descricao { get; set; }
     }
